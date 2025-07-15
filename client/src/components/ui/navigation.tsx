@@ -18,6 +18,33 @@ const navigationLinks: NavLink[] = [
   { name: "Contact", href: "/#contact" }
 ];
 
+// SVG Hamburger Icon Component
+const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {isOpen ? (
+      <>
+        <path d="M18 6L6 18" />
+        <path d="M6 6l12 12" />
+      </>
+    ) : (
+      <>
+        <path d="M3 12h18" />
+        <path d="M3 6h18" />
+        <path d="M3 18h18" />
+      </>
+    )}
+  </svg>
+);
+
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -88,69 +115,81 @@ export function Navigation() {
     }
   }, [location]);
 
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMobileMenu = () => {
+    console.log('Hamburger clicked:', !isMobileMenuOpen); // Debug log
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
   
-  // Smooth scroll function for anchor links
+  // Enhanced smooth scroll function for anchor links with better mobile support
   const smoothScroll = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>, href: string) => {
+    console.log('Smooth scroll called with:', href); // Debug log
+    
     if (href.startsWith('/#')) {
       e.preventDefault();
+      e.stopPropagation();
       
-      // If we're not on the home page, navigate to home first
-      if (location !== '/' && location !== '') {
-        setLocation('/');
-        // Wait for navigation to complete, then scroll
-        setTimeout(() => {
-          const targetId = href.replace('/#', '');
-          const element = document.getElementById(targetId);
-          
-          if (element) {
-            // Highlight the target section temporarily
-            element.classList.add('scroll-highlight');
-            
-            window.scrollTo({
-              top: element.offsetTop - 80,
-              behavior: 'smooth'
-            });
-            
-            // Remove highlight after animation completes
-            setTimeout(() => {
-              element.classList.remove('scroll-highlight');
-            }, 1500);
-          }
-        }, 100);
-      } else {
-        // We're already on home page, just scroll
-        const targetId = href.replace('/#', '');
+      // Close mobile menu immediately for better UX
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+      
+      // Update active link immediately
+      setActiveLink(href);
+      
+      const targetId = href.replace('/#', '');
+      console.log('Target ID:', targetId); // Debug log
+      
+      // Function to perform the scroll
+      const performScroll = () => {
         const element = document.getElementById(targetId);
+        console.log('Element found:', element); // Debug log
         
         if (element) {
           // Highlight the target section temporarily
           element.classList.add('scroll-highlight');
           
-          window.scrollTo({
-            top: element.offsetTop - 80,
-            behavior: 'smooth'
-          });
+          // Calculate offset
+          const offsetTop = element.offsetTop - 80;
+          console.log('Scrolling to:', offsetTop); // Debug log
+          
+          // Use different scroll methods for better mobile compatibility
+          if ('scrollBehavior' in document.documentElement.style) {
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+          } else {
+            // Fallback for older browsers/devices
+            window.scrollTo(0, offsetTop);
+          }
           
           // Remove highlight after animation completes
           setTimeout(() => {
             element.classList.remove('scroll-highlight');
           }, 1500);
+        } else {
+          console.error('Element not found:', targetId);
         }
-      }
+      };
       
-      // Update active link
-      setActiveLink(href);
-      
-      // Close mobile menu if open
-      if (isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
+      // If we're not on the home page, navigate to home first
+      if (location !== '/' && location !== '') {
+        console.log('Navigating to home first');
+        setLocation('/');
+        // Wait for navigation to complete, then scroll
+        setTimeout(performScroll, 200);
+      } else {
+        // We're already on home page, just scroll
+        console.log('Already on home page, scrolling directly');
+        // Small delay to ensure any animations complete
+        setTimeout(performScroll, 50);
       }
     }
   };
   
-  // Function to scroll to insights section
+  // Enhanced function to scroll to insights section
   const scrollToInsights = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Scroll to insights called'); // Debug log
     smoothScroll(e, '/#insights');
   };
 
@@ -241,18 +280,21 @@ export function Navigation() {
             </Button>
           </motion.nav>
           
-          {/* Mobile Navigation Toggle */}
-          <motion.button 
-            className="md:hidden p-2 rounded-full bg-primary/10 text-primary focus:outline-none"
-            whileTap={{ scale: 0.9 }}
+          {/* Mobile Navigation Toggle - Fixed with better touch handling */}
+          <button 
+            className="md:hidden p-3 rounded-full bg-primary/10 text-primary focus:outline-none active:bg-primary/20 transition-colors touch-manipulation"
             onClick={toggleMobileMenu}
+            onTouchStart={(e) => e.preventDefault()} // Prevent double-tap zoom
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            style={{ 
+              WebkitTapHighlightColor: 'transparent',
+              minWidth: '44px',
+              minHeight: '44px'
+            }}
           >
-            <i className={`fas ${isMobileMenuOpen ? "fa-times" : "fa-bars"} text-xl`}></i>
-          </motion.button>
+            <HamburgerIcon isOpen={isMobileMenuOpen} />
+          </button>
         </div>
         
         {/* Mobile Navigation Menu with animation */}
@@ -264,39 +306,62 @@ export function Navigation() {
               exit={{ height: 0, opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
               className="md:hidden overflow-hidden mt-4 bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-neutral-100"
+              style={{ zIndex: 40 }}
             >
               <div className="py-3 px-2 space-y-1">
                 {navigationLinks.map((link, index) => (
-                  <motion.a 
+                  <motion.div
                     key={index}
-                    href={link.href}
-                    onClick={(e) => smoothScroll(e, link.href)}
-                    className={cn(
-                      "block py-3 px-4 font-medium rounded-xl transition-all",
-                      activeLink === link.href
-                        ? "bg-primary/10 text-primary"
-                        : "text-neutral-700 hover:bg-neutral-100"
-                    )}
-                    whileHover={{ x: 4 }}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2, delay: index * 0.05 }}
                   >
-                    {link.name}
-                    {activeLink === link.href && (
-                      <motion.span 
-                        className="inline-block w-1.5 h-1.5 rounded-full bg-primary ml-2"
-                        layoutId="mobileIndicator"
-                      />
-                    )}
-                  </motion.a>
+                    <a 
+                      href={link.href}
+                      onClick={(e) => {
+                        console.log('Mobile link clicked:', link.name, link.href); // Debug log
+                        smoothScroll(e, link.href);
+                      }}
+                      onTouchStart={(e) => {
+                        // Prevent iOS double-tap zoom
+                        e.currentTarget.style.backgroundColor = 'rgba(0,0,0,0.1)';
+                      }}
+                      onTouchEnd={(e) => {
+                        e.currentTarget.style.backgroundColor = '';
+                      }}
+                      className={cn(
+                        "block py-3 px-4 font-medium rounded-xl transition-all touch-manipulation",
+                        activeLink === link.href
+                          ? "bg-primary/10 text-primary"
+                          : "text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200"
+                      )}
+                      style={{ 
+                        WebkitTapHighlightColor: 'transparent',
+                        minHeight: '44px',
+                        display: 'flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      {link.name}
+                      {activeLink === link.href && (
+                        <motion.span 
+                          className="inline-block w-1.5 h-1.5 rounded-full bg-primary ml-2"
+                          layoutId="mobileIndicator"
+                        />
+                      )}
+                    </a>
+                  </motion.div>
                 ))}
                 
                 <Button
-                  onClick={scrollToInsights}
+                  onClick={(e) => {
+                    console.log('Mobile Get Started clicked'); // Debug log
+                    scrollToInsights(e);
+                  }}
                   variant="default"
                   size="lg" 
-                  className="w-full mt-2 justify-center"
+                  className="w-full mt-2 justify-center touch-manipulation"
+                  style={{ minHeight: '44px' }}
                 >
                   Get Started
                 </Button>
