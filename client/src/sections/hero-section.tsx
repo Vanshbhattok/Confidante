@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import shreyaImg from "@/assets/Shreya_mittal.jpg";
+import muskaanImg from "@/assets/Psychologist_mentor.jpg";
 
 export function HeroSection() {
   // Enhanced animation variants
@@ -281,22 +283,15 @@ export function HeroSection() {
                 <div className="flex -space-x-2">
                   <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-md">
                     <img 
-                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200" 
-                      alt="Community member" 
+                      src={shreyaImg} 
+                      alt="Shreya Mittal - Founder" 
                       className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-md">
                     <img 
-                      src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200" 
-                      alt="Community member" 
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-md">
-                    <img 
-                      src="https://images.unsplash.com/photo-1558222218-b7b54eede3f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200" 
-                      alt="Community member" 
+                      src={muskaanImg} 
+                      alt="Muskaan Sharma - Psychologist" 
                       className="w-full h-full object-cover"
                     />
                   </div>
