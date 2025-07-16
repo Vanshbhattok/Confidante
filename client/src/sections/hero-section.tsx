@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import shreyaImg from "@/assets/Shreya_mittal.jpg";
 import muskaanImg from "@/assets/Psychologist_mentor.jpg";
+import vanshImg from "@/assets/vansh_bhatt.jpg";
+import arushiImg from "@/assets/blank-profile-picture.png";
 
 export function HeroSection() {
   // Enhanced animation variants
@@ -294,6 +296,16 @@ export function HeroSection() {
                       alt="Muskaan Sharma - Psychologist" 
                       className="w-full h-full object-cover"
                     />
+                  </div>
+                  <div className="w-10 h-10 rounded-full border-2 border-white overflow-hidden shadow-md">
+                    <img 
+                      src={vanshImg} 
+                      alt="Vansh Bhatt - Team Member" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center shadow-md backdrop-blur-sm">
+                    <span className="text-xs font-semibold text-primary">+1</span>
                   </div>
                 </div>
                 <div className="text-center sm:text-left">
