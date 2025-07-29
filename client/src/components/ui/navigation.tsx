@@ -4,12 +4,10 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 
-
 interface NavLink {
   name: string;
   href: string;
 }
-
 
 const navigationLinks: NavLink[] = [
   { name: "Home", href: "/#hero" },
@@ -19,7 +17,6 @@ const navigationLinks: NavLink[] = [
   { name: "Services", href: "/#services" },
   { name: "Contact", href: "/#contact" }
 ];
-
 
 // SVG Hamburger Icon Component
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
@@ -48,13 +45,11 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
   </svg>
 );
 
-
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("/#hero");
   const [location, setLocation] = useLocation();
-
 
   // Function to handle scroll and update navbar styling
   useEffect(() => {
@@ -78,13 +73,11 @@ export function Navigation() {
       }
     };
 
-
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check
     
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location]);
-
 
   // Set active link based on current location
   useEffect(() => {
@@ -121,7 +114,6 @@ export function Navigation() {
       }
     }
   }, [location]);
-
 
   const toggleMobileMenu = () => {
     console.log('Hamburger clicked:', !isMobileMenuOpen); // Debug log
@@ -195,12 +187,11 @@ export function Navigation() {
     }
   };
   
-  // Enhanced function to scroll to insights section
-  const scrollToInsights = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>) => {
-    console.log('Scroll to insights called'); // Debug log
-    smoothScroll(e, '/#insights');
+  // Updated function to scroll to about section instead of insights
+  const scrollToAbout = (e: React.MouseEvent<HTMLAnchorElement> | React.MouseEvent<HTMLButtonElement>) => {
+    console.log('Scroll to about called'); // Debug log
+    smoothScroll(e, '/#about');
   };
-
 
   return (
     <header 
@@ -280,7 +271,7 @@ export function Navigation() {
             ))}
             
             <Button
-              onClick={scrollToInsights}
+              onClick={scrollToAbout}
               variant="default"
               size="sm"
               className="ml-4 shadow-md"
@@ -365,7 +356,7 @@ export function Navigation() {
                 <Button
                   onClick={(e) => {
                     console.log('Mobile Get Started clicked'); // Debug log
-                    scrollToInsights(e);
+                    scrollToAbout(e);
                   }}
                   variant="default"
                   size="lg" 
