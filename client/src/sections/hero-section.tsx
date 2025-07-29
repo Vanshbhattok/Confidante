@@ -4,8 +4,11 @@ import shreyaImg from "@/assets/Shreya_mittal.jpg";
 import muskaanImg from "@/assets/Psychologist_mentor.jpg";
 import vanshImg from "@/assets/vansh_bhatt.jpg";
 import arushiImg from "@/assets/blank-profile-picture.png";
+import { useLocation } from "wouter";
 
 export function HeroSection() {
+  const [, setLocation] = useLocation();
+
   // Enhanced animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -225,19 +228,39 @@ export function HeroSection() {
                   className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary/90 text-white font-semibold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 text-base border-0 min-w-[180px]"
                   onClick={(e) => {
                     e.preventDefault();
-                    const insightsSection = document.getElementById('insights');
                     
-                    if (insightsSection) {
-                      insightsSection.classList.add('scroll-highlight');
-                      
-                      window.scrollTo({
-                        top: insightsSection.offsetTop - 80,
-                        behavior: 'smooth'
-                      });
-                      
+                    if (window.location.pathname === "/") {
+                      const aboutSection = document.getElementById("about");
+                      if (aboutSection) {
+                        aboutSection.classList.add("scroll-highlight");
+
+                        window.scrollTo({
+                          top: aboutSection.offsetTop - 80,
+                          behavior: "smooth",
+                        });
+
+                        setTimeout(() => {
+                          aboutSection.classList.remove("scroll-highlight");
+                        }, 1500);
+                      }
+                    } else {
+                      window.location.href = "/";
+
                       setTimeout(() => {
-                        insightsSection.classList.remove('scroll-highlight');
-                      }, 1500);
+                        const aboutSection = document.getElementById("about");
+                        if (aboutSection) {
+                          aboutSection.classList.add("scroll-highlight");
+
+                          window.scrollTo({
+                            top: aboutSection.offsetTop - 80,
+                            behavior: "smooth",
+                          });
+
+                          setTimeout(() => {
+                            aboutSection.classList.remove("scroll-highlight");
+                          }, 1500);
+                        }
+                      }, 300);
                     }
                   }}
                 >
@@ -247,23 +270,11 @@ export function HeroSection() {
               </motion.div>
               
               <motion.a 
-                href="/#services" 
+                href="/services" 
                 onClick={(e) => {
                   e.preventDefault();
-                  const servicesSection = document.getElementById('services');
-                  
-                  if (servicesSection) {
-                    servicesSection.classList.add('scroll-highlight');
-                    
-                    window.scrollTo({
-                      top: servicesSection.offsetTop - 80,
-                      behavior: 'smooth'
-                    });
-                    
-                    setTimeout(() => {
-                      servicesSection.classList.remove('scroll-highlight');
-                    }, 1500);
-                  }
+                  setLocation("/services");
+                  window.scrollTo(0, 0);
                 }}
                 className="flex items-center text-neutral-700 font-medium hover:text-primary transition-all duration-300 group py-2 px-4 rounded-full hover:bg-primary/5"
                 whileHover={{ scale: 1.02 }}
