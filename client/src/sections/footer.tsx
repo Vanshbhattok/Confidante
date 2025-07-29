@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
 
 interface FooterLink {
   name: string;
@@ -6,8 +7,8 @@ interface FooterLink {
 }
 
 const quickLinks: FooterLink[] = [
-  { name: "About Us", href: "/#about" },
-  { name: "Services", href: "/#services" },
+  { name: "About Us", href: "/about" },
+  { name: "Services", href: "/services" },
   { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/#contact" }
 ];
@@ -19,12 +20,23 @@ const serviceLinks: FooterLink[] = [
   { name: "Professional Development", href: "#" }
 ];
 
+// Removed "Terms of Service"
 const legalLinks: FooterLink[] = [
-  { name: "Privacy Policy", href: "#" },
-  { name: "Terms of Service", href: "#" }
+  { name: "Privacy Policy", href: "/privacy-policy" }
 ];
 
 export function Footer() {
+  const [, setLocation] = useLocation();
+
+  // Handler for internal navigation links
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    if (href.startsWith("/")) {
+      e.preventDefault();
+      setLocation(href);
+      window.scrollTo(0, 0); // Scroll to top on navigation
+    }
+  };
+
   return (
     <footer className="bg-neutral-800 text-white pt-16 pb-8">
       <div className="container">
@@ -35,15 +47,16 @@ export function Footer() {
               Health and well-being, beyond the physical. Transforming how we understand and approach holistic wellness.
             </p>
           </div>
-          
+
           <div>
             <h4 className="font-medium text-lg mb-6">Quick Links</h4>
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <a 
-                    href={link.href} 
-                    className="text-neutral-100/70 hover:text-primary transition-colors"
+                  <a
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="text-neutral-100/70 hover:text-primary transition-colors cursor-pointer"
                   >
                     {link.name}
                   </a>
@@ -51,15 +64,18 @@ export function Footer() {
               ))}
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-medium text-lg mb-6">Services</h4>
             <ul className="space-y-3">
               {serviceLinks.map((link, index) => (
                 <li key={index}>
-                  <a 
-                    href={link.href} 
-                    className="text-neutral-100/70 hover:text-primary transition-colors"
+                  {/* If you have actual routes for these, update href and handleNavClick similarly */}
+                  <a
+                    href={link.href}
+                    className="text-neutral-100/70 hover:text-primary transition-colors cursor-not-allowed"
+                    onClick={e => e.preventDefault()} // Disabled, update if routes available
+                    aria-disabled="true"
                   >
                     {link.name}
                   </a>
@@ -67,20 +83,21 @@ export function Footer() {
               ))}
             </ul>
           </div>
-          
+
           <div>
             <h4 className="font-medium text-lg mb-6">Subscribe</h4>
             <p className="text-neutral-100/70 mb-4">
               Stay updated with our latest insights and announcements.
             </p>
-            <form className="flex">
-              <input 
-                type="email" 
-                placeholder="Your email" 
+            <form className="flex" onSubmit={e => e.preventDefault()}>
+              <input
+                type="email"
+                placeholder="Your email"
                 className="px-4 py-2 rounded-l-lg focus:outline-none flex-1 text-neutral-800"
+                aria-label="Email for subscription"
               />
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-r-lg transition-colors"
                 aria-label="Subscribe"
               >
@@ -89,17 +106,18 @@ export function Footer() {
             </form>
           </div>
         </div>
-        
+
         <div className="border-t border-neutral-700 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-neutral-100/60 text-sm mb-4 md:mb-0">
             &copy; {new Date().getFullYear()} Confidante. All rights reserved.
           </p>
           <div className="flex gap-6">
             {legalLinks.map((link, index) => (
-              <a 
+              <a
                 key={index}
-                href={link.href} 
-                className="text-neutral-100/60 hover:text-primary transition-colors"
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="text-neutral-100/60 hover:text-primary transition-colors cursor-pointer"
               >
                 {link.name}
               </a>

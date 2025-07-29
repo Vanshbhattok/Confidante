@@ -10,6 +10,7 @@ import BlogDetail from "@/pages/blog/[slug]";
 import BlogAdmin from "@/pages/blog/admin";
 import Services from "@/pages/services"; // Existing import
 import About from "@/pages/about";       // New import for About page
+import PrivacyPolicy from "@/pages/privacy-policy";
 import { MotionConfig } from "framer-motion";
 
 function Router() {
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/blog-admin" component={BlogAdmin} />
       <Route path="/services" component={Services} />
       <Route path="/about" component={About} />      {/* Added About route */}
+      <Route path="/privacy-policy" component={PrivacyPolicy} />
       <Route component={NotFound} />
     </Switch>
   );
