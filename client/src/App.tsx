@@ -8,6 +8,7 @@ import NotFound from "@/pages/not-found";
 import BlogListing from "@/pages/blog";
 import BlogDetail from "@/pages/blog/[slug]";
 import BlogAdmin from "@/pages/blog/admin";
+import Services from "@/pages/services"; // Add this import
 import { MotionConfig } from "framer-motion";
 
 function Router() {
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/blog" component={BlogListing} />
       <Route path="/blog/:slug" component={BlogDetail} />
       <Route path="/blog-admin" component={BlogAdmin} />
+      <Route path="/services" component={Services} /> {/* Add this route */}
       <Route component={NotFound} />
     </Switch>
   );

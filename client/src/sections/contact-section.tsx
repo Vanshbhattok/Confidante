@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { SectionTitle } from "@/components/ui/section-title";
 import { ContactForm } from "@/components/ui/contact-form";
-
+import { useEffect } from "react";
 
 interface ContactInfo {
   icon: string;
@@ -13,7 +13,7 @@ const contactInfo: ContactInfo[] = [
   {
     icon: "fas fa-envelope",
     title: "Email",
-    content: <p className="text-neutral-800/70">helpatconfidante@gmail.com</p>
+    content: <p className="text-neutral-800/70">helpatconfidante@gmail.com</p>,
   },
   {
     icon: "fas fa-phone-alt",
@@ -23,16 +23,54 @@ const contactInfo: ContactInfo[] = [
         <p>+91 98391 54888</p>
         <p className="mt-1">+91 75058 43873</p>
       </div>
-    )
-  }
+    ),
+  },
 ];
 
 const socialLinks = [
-  { icon: "fab fa-instagram", href: "https://www.instagram.com/your.confidante/" },
-  { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/company/your-confidante/posts/?feedView=all" }
+  {
+    icon: "fab fa-instagram",
+    href: "https://www.instagram.com/your.confidante/",
+  },
+  {
+    icon: "fab fa-linkedin-in",
+    href: "https://www.linkedin.com/company/your-confidante/posts/?feedView=all",
+  },
 ];
 
 export function ContactSection() {
+  useEffect(() => {
+    const subject = localStorage.getItem("contactSubject");
+    if (subject) {
+      // Scroll to contact section smoothly
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        contactSection.classList.add("scroll-highlight");
+
+        window.scrollTo({
+          top: contactSection.offsetTop - 80,
+          behavior: "smooth",
+        });
+
+        setTimeout(() => {
+          contactSection.classList.remove("scroll-highlight");
+        }, 1500);
+      }
+
+      // Pre-fill contact form subject field
+      setTimeout(() => {
+        const subjectField = document.querySelector(
+          'input[name="subject"]'
+        ) as HTMLInputElement;
+        if (subjectField) {
+          subjectField.value = subject;
+        }
+      }, 300);
+
+      localStorage.removeItem("contactSubject");
+    }
+  }, []);
+
   return (
     <section id="contact" className="py-20 bg-white">
       <div className="container">
@@ -42,12 +80,14 @@ export function ContactSection() {
             description="Have questions about our programs or want to bring Confidante to your school or organization? Reach out to us."
           />
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <div className="reveal">
             <div className="bg-neutral-100 rounded-xl p-8 h-full">
-              <h3 className="font-heading text-2xl font-medium mb-6">Get in Touch</h3>
-              
+              <h3 className="font-heading text-2xl font-medium mb-6">
+                Get in Touch
+              </h3>
+
               <div className="space-y-6">
                 {contactInfo.map((info, index) => (
                   <div key={index} className="flex items-start gap-4">
@@ -61,7 +101,7 @@ export function ContactSection() {
                   </div>
                 ))}
               </div>
-              
+
               <div className="mt-8">
                 <h4 className="font-medium mb-3">Follow Us</h4>
                 <div className="flex gap-4">
@@ -69,7 +109,11 @@ export function ContactSection() {
                     <motion.a
                       key={index}
                       href={link.href}
-                      whileHover={{ scale: 1.1, backgroundColor: "hsl(var(--primary))", color: "#fff" }}
+                      whileHover={{
+                        scale: 1.1,
+                        backgroundColor: "hsl(var(--primary))",
+                        color: "#fff",
+                      }}
                       className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
                     >
                       <i className={link.icon}></i>
@@ -79,7 +123,7 @@ export function ContactSection() {
               </div>
             </div>
           </div>
-          
+
           <div className="reveal" style={{ animationDelay: "0.3s" }}>
             <ContactForm />
           </div>
