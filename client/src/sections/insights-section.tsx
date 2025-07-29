@@ -38,7 +38,7 @@ export function InsightsSection() {
       <div className="container">
         <div className="text-center mb-16 reveal">
           <SectionTitle
-            title="Latest Insights"
+            title="Blogs By Confidante"
             description="Discover our educational content and insights on holistic health and well-being."
           />
         </div>
@@ -84,7 +84,7 @@ export function InsightsSection() {
         <div className="text-center mt-12 reveal">
           <Link href="/blog">
             <button className="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-2 px-6 rounded-full transition-all">
-              View All Insights
+              View All Blogs
             </button>
           </Link>
         </div>

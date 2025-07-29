@@ -61,7 +61,7 @@ export default function BlogListing() {
           <div className="container">
             <div className="text-center mb-12 reveal">
               <SectionTitle
-                title="Latest Insights & Resources"
+                title="Latest Blogs & Resources"
                 description="Explore our collection of articles on mental, emotional, and social well-being to support your holistic health journey."
                 centered={true}
               />

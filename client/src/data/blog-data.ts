@@ -1,3 +1,4 @@
+import logo from "@/assets/logo.png";
 export interface BlogPost {
   id: string;
   slug: string;
@@ -91,12 +92,13 @@ In a world where mental health challenges are increasingly common, journaling of
 Start today with a single sentence if that's all you can manage. Your future self will thank you.
     `,
     featuredImage: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500',
-    publishDate: 'May 12, 2023',
+    publishDate: 'Latest',
     author: {
-      name: 'Dr. Jasmine Williams',
-      avatar: 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200',
-      bio: 'Clinical psychologist specializing in therapeutic writing techniques'
-    },
+  name: 'By Confidante',
+  avatar: logo,
+  bio: 'Confidante is dedicated to transforming health education in schools and communities.'
+},
+
     category: 'Mental Health',
     tags: ['journaling', 'mental health', 'self-care', 'wellness', 'anxiety relief'],
     readingTimeMinutes: 7
@@ -198,12 +200,13 @@ Building meaningful connections requires intentionality, especially in our digit
 Remember that connection, like any worthwhile endeavor, takes practice. Start small, be consistent, and watch as your social wellbeing transforms over time.
     `,
     featuredImage: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500',
-    publishDate: 'April 28, 2023',
+    
+    publishDate: 'Latest',
     author: {
-      name: 'Sarah Johnson',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200',
-      bio: 'Founder of Confidante with a background in community health education'
-    },
+  name: 'By Confidante',
+  avatar: logo,
+  bio: 'Confidante is dedicated to transforming health education in schools and communities.'
+},
     category: 'Social Health',
     tags: ['relationships', 'community', 'social health', 'loneliness', 'digital wellbeing'],
     readingTimeMinutes: 9
@@ -318,12 +321,12 @@ The food-mood connection highlights an important truth: emotional health is not 
 Rather than seeing diet as a quick fix for emotional challenges, consider it a long-term investment in your mental health—one meal at a time.
     `,
     featuredImage: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500',
-    publishDate: 'April 15, 2023',
+    publishDate: 'Latest',
     author: {
-      name: 'Michael Chen',
-      avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200',
-      bio: 'Nutritional neuroscience researcher and wellness advocate'
-    },
+  name: 'By Confidante',
+  avatar: logo,
+  bio: 'Confidante is dedicated to transforming health education in schools and communities.'
+},
     category: 'Nutrition',
     tags: ['nutrition', 'mental health', 'gut health', 'diet', 'emotional wellbeing'],
     readingTimeMinutes: 10
@@ -476,12 +479,12 @@ Mindfulness isn't about achieving a special state or becoming a different person
 Remember that mindfulness is called a "practice" for a reason—it's an ongoing process of returning to the present moment, one breath at a time.
     `,
     featuredImage: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500',
-    publishDate: 'March 22, 2023',
+    publishDate: 'Latest',
     author: {
-      name: 'Dr. Jasmine Williams',
-      avatar: 'https://images.unsplash.com/photo-1558222218-b7b54eede3f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200',
-      bio: 'Clinical psychologist specializing in mindfulness-based interventions'
-    },
+  name: 'By Confidante',
+  avatar: logo,
+  bio: 'Confidante is dedicated to transforming health education in schools and communities.'
+},
     category: 'Mental Health',
     tags: ['mindfulness', 'meditation', 'stress reduction', 'mental health', 'beginner practices'],
     readingTimeMinutes: 8
@@ -592,12 +595,12 @@ In a culture that often glorifies busyness and deprioritizes rest, treating slee
 Remember that good sleep isn't a luxury—it's a biological necessity and the foundation upon which all other health practices build.
     `,
     featuredImage: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500',
-    publishDate: 'March 5, 2023',
+   publishDate: 'Latest',
     author: {
-      name: 'Sarah Johnson',
-      avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200',
-      bio: 'Health education specialist with expertise in sleep science'
-    },
+  name: 'By Confidante',
+  avatar: logo,
+  bio: 'Confidante is dedicated to transforming health education in schools and communities.'
+},
     category: 'Physical Health',
     tags: ['sleep', 'health', 'wellness', 'mental health', 'physical health'],
     readingTimeMinutes: 9
@@ -731,12 +734,12 @@ Digital wellbeing isn't about rejecting technology—it's about reclaiming agenc
 The goal isn't perfection but conscious choice: using technology as a tool rather than being used by it. With intention and practice, we can create digital lives that support rather than subvert our deeper values and wellbeing.
     `,
     featuredImage: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500',
-    publishDate: 'February 18, 2023',
+   publishDate: 'Latest',
     author: {
-      name: 'Michael Chen',
-      avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&h=200',
-      bio: 'Digital wellness researcher and technology ethicist'
-    },
+  name: 'By Confidante',
+  avatar: logo,
+  bio: 'Confidante is dedicated to transforming health education in schools and communities.'
+},
     category: 'Mental Health',
     tags: ['digital wellbeing', 'technology', 'mental health', 'screen time', 'mindfulness'],
     readingTimeMinutes: 10

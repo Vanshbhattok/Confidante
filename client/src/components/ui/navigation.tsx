@@ -4,19 +4,22 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "wouter";
 
+
 interface NavLink {
   name: string;
   href: string;
 }
 
+
 const navigationLinks: NavLink[] = [
   { name: "Home", href: "/#hero" },
-  { name: "Insights", href: "/#insights" },
+  { name: "Blogs", href: "/#insights" },
   { name: "About", href: "/#about" },
   { name: "Team", href: "/#team" },
   { name: "Services", href: "/#services" },
   { name: "Contact", href: "/#contact" }
 ];
+
 
 // SVG Hamburger Icon Component
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
@@ -45,11 +48,13 @@ const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
   </svg>
 );
 
+
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("/#hero");
   const [location, setLocation] = useLocation();
+
 
   // Function to handle scroll and update navbar styling
   useEffect(() => {
@@ -73,11 +78,13 @@ export function Navigation() {
       }
     };
 
+
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check
     
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location]);
+
 
   // Set active link based on current location
   useEffect(() => {
@@ -114,6 +121,7 @@ export function Navigation() {
       }
     }
   }, [location]);
+
 
   const toggleMobileMenu = () => {
     console.log('Hamburger clicked:', !isMobileMenuOpen); // Debug log
@@ -192,6 +200,7 @@ export function Navigation() {
     console.log('Scroll to insights called'); // Debug log
     smoothScroll(e, '/#insights');
   };
+
 
   return (
     <header 
