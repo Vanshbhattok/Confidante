@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { SectionTitle } from "@/components/ui/section-title";
 import { blogPosts } from "@/data/blog-data";
+import { useState, useEffect } from "react";
 
 // Use the top 3 blog posts from our data
 const featuredInsights = blogPosts.slice(0, 3).map(post => ({
@@ -32,6 +33,29 @@ function getCategoryColor(category: string): string {
 
 export function InsightsSection() {
   const [, setLocation] = useLocation();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if screen is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // md breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const maxIndex = featuredInsights.length - 1;
+
+  const nextSlide = () => {
+    setCurrentIndex(prev => prev === maxIndex ? 0 : prev + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex(prev => prev === 0 ? maxIndex : prev - 1);
+  };
 
   return (
     <section id="insights" className="py-20 bg-white">
@@ -43,7 +67,8 @@ export function InsightsSection() {
           />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Desktop Grid Layout (unchanged) */}
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredInsights.map((insight, index) => (
             <motion.div
               key={index}
@@ -79,6 +104,85 @@ export function InsightsSection() {
               </Link>
             </motion.div>
           ))}
+        </div>
+
+        {/* Mobile Carousel Layout */}
+        <div className="md:hidden relative">
+          <div className="overflow-hidden px-4">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out gap-4"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            >
+              {featuredInsights.map((insight, index) => (
+                <motion.div
+                  key={index}
+                  className="bg-neutral-100 rounded-xl shadow-sm overflow-hidden card-hover reveal flex-shrink-0 w-full"
+                  style={{ animationDelay: `${index * 0.2}s` }}
+                  whileHover={{ y: -5 }}
+                >
+                  <Link href={`/blog/${insight.slug}`}>
+                    <div className="cursor-pointer">
+                      <img 
+                        src={insight.image} 
+                        alt={insight.title} 
+                        className="w-full h-48 object-cover"
+                      />
+                      <div className="p-6">
+                        <span className={`text-xs font-semibold ${insight.categoryColor} uppercase tracking-wider`}>
+                          {insight.category}
+                        </span>
+                        <h3 className="font-heading text-xl font-medium mt-2 mb-3">
+                          {insight.title}
+                        </h3>
+                        <p className="text-neutral-800/70 mb-4">
+                          {insight.description}
+                        </p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-neutral-800/60">{insight.date}</span>
+                          <span className="text-primary font-medium hover:text-primary/80 transition-colors">
+                            Read More
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile Navigation Buttons */}
+          <div className="flex justify-center gap-4 mt-6">
+            <button
+              onClick={prevSlide}
+              className="bg-white shadow-lg rounded-full p-3 transition-all duration-200"
+            >
+              <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={nextSlide}
+              className="bg-white shadow-lg rounded-full p-3 transition-all duration-200"
+            >
+              <svg className="w-5 h-5 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Dots Indicator */}
+          <div className="flex justify-center mt-4 gap-2">
+            {featuredInsights.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                  index === currentIndex ? 'bg-primary' : 'bg-neutral-300'
+                }`}
+              />
+            ))}
+          </div>
         </div>
         
         <div className="text-center mt-12 reveal">
