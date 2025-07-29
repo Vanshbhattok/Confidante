@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import shreyaImg from "@/assets/Shreya_mittal.jpg";
 import muskaanImg from "@/assets/Psychologist_mentor.jpg";
-import vanshImg from "@/assets/vansh_bhatt.jpg";
+import vanshImg from "@/assets/Vansh_bhatt.jpg";
 import arushiImg from "@/assets/blank-profile-picture.png";
 import { useLocation } from "wouter";
 
