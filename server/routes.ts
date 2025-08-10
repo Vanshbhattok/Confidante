@@ -21,17 +21,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Log the data (for server-side record)
       console.log("Contact form submission:", validatedData);
       
-      // Note: Our actual email sending happens on the client-side using EmailJS
-      // This endpoint acts as a fallback and validation layer
-      
-      // We can still store the contact message in the database if needed
-      // This would be implemented in a production environment
-      
       return res.status(200).json({ 
         success: true, 
         message: "Thank you for your message. We'll get back to you soon.",
-        // Include recipient email in the response for client-side reference
-        recipientEmail: "rakshat6501@gmail.com"
+        recipientEmail: "vanshbhattok@gmail.com"
       });
     } catch (error) {
       console.error("Contact form error:", error);
